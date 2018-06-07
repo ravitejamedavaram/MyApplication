@@ -78,9 +78,10 @@ public class MainScreen extends AppCompatActivity {
     }
 
     private void sendSignal(String portNumber, String status) {
-        service.sendToPi(portNumber, status).enqueue(new Callback<POST>() {
+//        service.sendToPi(portNumber, status).enqueue(new Callback<Message>() {
+        service.test().enqueue(new Callback<Object>() {
             @Override
-            public void onResponse(Call<POST> call, Response<POST> response) {
+            public void onResponse(Call<Object> call, Response<Object> response) {
                 responseTextView.setText("Send Signal");
                 try {
                     Thread.sleep(3000);
@@ -90,8 +91,9 @@ public class MainScreen extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<POST> call, Throwable t) {
+            public void onFailure(Call<Object> call, Throwable t) {
                 responseTextView.setText("failed to send signal");
+                System.out.println(t.getMessage());
             }
         });
 
