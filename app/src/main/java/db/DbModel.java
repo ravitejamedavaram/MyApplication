@@ -15,6 +15,7 @@ public class DbModel extends SQLiteOpenHelper {
     public static String portColumn = "port";
     public static String pinName = "pinName";
     public static String pinId = "pinId";
+    public SQLiteDatabase db;
 
     public static String createTable = "CREATE TABLE if not exists " + connectionTable + "("
             + hostColumn + " TEXT,"
@@ -57,6 +58,8 @@ public class DbModel extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        db.execSQL("DROP TABLE IF EXISTS connection");
+        db.execSQL("DROP TABLE IF EXISTS pinTable");
         db.execSQL(createTable);
         db.execSQL(createPinTable);
 

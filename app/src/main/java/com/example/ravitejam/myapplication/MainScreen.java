@@ -78,11 +78,14 @@ public class MainScreen extends AppCompatActivity {
     }
 
     private void sendSignal(String portNumber, String status) {
-//        service.sendToPi(portNumber, status).enqueue(new Callback<Message>() {
-        service.test().enqueue(new Callback<Object>() {
+        Message message = new Message();
+        message.setPinNumber(portNumber);
+        message.setStatus(status);
+        service.sendToPi(message).enqueue(new Callback<Message>() {
+//        service.test().enqueue(new Callback<Object>() {
             @Override
-            public void onResponse(Call<Object> call, Response<Object> response) {
-                responseTextView.setText("Send Signal");
+            public void onResponse(Call<Message> call, Response<Message> response) {
+                responseTextView.setText("Message Signal");
                 try {
                     Thread.sleep(3000);
                 } catch (InterruptedException e) {
@@ -91,7 +94,7 @@ public class MainScreen extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<Message> call, Throwable t) {
                 responseTextView.setText("failed to send signal");
                 System.out.println(t.getMessage());
             }
